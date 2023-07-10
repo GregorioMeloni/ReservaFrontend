@@ -1,0 +1,32 @@
+<br><br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Estados</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NOMBRE</th>
+                        <th>DESCRIPCION</th>
+                        <th>COLOR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let estado of estados" class="text-center">
+                        <td>{{estado.id}}</td>
+                        <td>{{estado.nombre}}</td>
+                        <td>{{estado.descripcion}}</td>
+                        <td>{{estado.color}}</td>
+                        <td>
+                            <button class="btn btn-warning">Editar</button>
+                            <button class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
