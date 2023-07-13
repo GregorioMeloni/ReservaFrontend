@@ -9,16 +9,17 @@ import { ServiceService } from 'src/app/Service/service.service';
   styleUrls: ['./listar.component.scss']
 })
 export class ListarComponent {
-  filtroColumna = ''; // Valor inicializado para 'filtroColumna'
+  filtroColumna = '';
   filtroAplicado = false;
-  valorBusqueda = ''; // Valor inicializado para 'valorBusqueda'
-  ordenSeleccionado = ''; // Valor inicializado para el orden
+  valorBusqueda = '';
+  ordenSeleccionado = '';
   ordenAplicado = false;
-  columnaSeleccionada = ''; // Valor inicializado para la columna de orden
+  columnaSeleccionada = '';
   estados: Estado[];
-  paginaActual = 0; // Página actual seleccionada
-  elementosPorPagina = 3; // Número de elementos por página
-  totalPaginas = 0; // Total de páginas disponibles
+  paginaActual = 0;
+  elementosPorPagina = 3;
+  totalPaginas = 0;
+  mostrarErrorValorBusqueda = false;
 
   constructor(private service: ServiceService, private router: Router) {
     this.estados = [];
@@ -27,8 +28,8 @@ export class ListarComponent {
   ngOnInit() {
     this.getEstados();
   }
-  
-  Nuevo(){
+
+  Nuevo() {
     this.router.navigate(["add"]);
   }
 
@@ -54,30 +55,41 @@ export class ListarComponent {
     location.reload();
   }
 
-  aplicarFiltro(){
-    this.filtroAplicado = true;
-    this.fetch();
+  aplicarFiltro() {
+    if (this.valorBusqueda.trim() !== '') {
+      this.filtroAplicado = true;
+      this.mostrarErrorValorBusqueda = false;
+      this.fetch();
+    } else {
+      this.mostrarErrorValorBusqueda = true;
+    }
   }
 
   fetch() {
-
     if (this.filtroColumna === 'id') {
-      if(this.filtroAplicado){
+      if (this.filtroAplicado) {
         this.paginaActual = 0;
         this.service.getEstadoId(Number(this.valorBusqueda))
-        .subscribe(data => {
-          this.estados = [data];
-          this.totalPaginas = 1;
-        });
-      }else{
+          .subscribe(data => {
+            this.estados = [data];
+            this.totalPaginas = 1;
+          });
+      } else {
         this.getEstados();
       }
     } else {
-      this.service.buscarEstados(this.filtroColumna, this.valorBusqueda, this.columnaSeleccionada,this.ordenSeleccionado,
+      this.service.buscarEstados(this.filtroColumna, this.valorBusqueda, this.columnaSeleccionada, this.ordenSeleccionado,
         this.filtroAplicado, this.ordenAplicado)
         .subscribe(data => {
-          this.estados = data.content;
-          this.totalPaginas = Math.ceil(data.content.length / this.elementosPorPagina);
+          this.estados = data.content.filter((estado: Estado) => {
+            return (
+              estado.nombre.toLowerCase().startsWith(this.valorBusqueda.toLowerCase()) ||
+              estado.descripcion.toLowerCase().startsWith(this.valorBusqueda.toLowerCase()) ||
+              estado.color.toLowerCase().startsWith(this.valorBusqueda.toLowerCase())
+            );
+          });
+  
+          this.totalPaginas = Math.ceil(this.estados.length / this.elementosPorPagina);
         });
     }
   }
@@ -86,10 +98,11 @@ export class ListarComponent {
     this.filtroColumna = '';
     this.valorBusqueda = '';
     this.filtroAplicado = false;
+    this.mostrarErrorValorBusqueda = false;
     this.getEstados();
   }
 
-  aplicarOrden(){
+  aplicarOrden() {
     this.ordenAplicado = true;
     this.fetch();
   }
@@ -103,7 +116,7 @@ export class ListarComponent {
 
   irAPagina(pagina: number) {
     this.paginaActual = pagina;
-    this.fetch(); // O llama a this.aplicarOrden() si corresponde
+    this.fetch();
   }
 
   paginasTotales() {

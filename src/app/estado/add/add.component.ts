@@ -10,19 +10,49 @@ import { ServiceService } from 'src/app/Service/service.service';
 })
 export class AddComponent {
   estado: Estado = new Estado();
-  constructor(private router:Router, private service: ServiceService){
+  nombreError: boolean = false;
+  descripcionError: boolean = false;
+  colorError: boolean = false;
 
-  }
-  ngOnInit(){
+  constructor(private router: Router, private service: ServiceService) {}
 
+  ngOnInit() {}
+
+  Guardar(estado: Estado) {
+    if (!this.validarCampos()) {
+      return;
+    }
+
+    this.service.createEstado(estado).subscribe(data => {
+      alert('Agregado con éxito');
+      this.router.navigate(['listar']);
+    });
   }
 
-  Guardar(estado:Estado){
-    this.service.createEstado(estado)
-    .subscribe(data=>{
-      alert("Agregado con éxito");
-      this.router.navigate(["listar"]);
-    })
+  validarCampos(): boolean {
+    let isValid = true;
+
+    if (!this.estado.nombre) {
+      this.nombreError = true;
+      isValid = false;
+    } else {
+      this.nombreError = false;
+    }
+
+    if (!this.estado.descripcion) {
+      this.descripcionError = true;
+      isValid = false;
+    } else {
+      this.descripcionError = false;
+    }
+
+    if (!this.estado.color || this.estado.color.length > 6) {
+      this.colorError = true;
+      isValid = false;
+    } else {
+      this.colorError = false;
+    }
+
+    return isValid;
   }
-  
 }

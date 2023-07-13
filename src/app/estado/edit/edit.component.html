@@ -9,15 +9,18 @@
                 <div class="form-group">
                     <label for="">Nombre</label>
                     <input [(ngModel)]="estado.nombre" name="nombre" type="text" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="">Descripcion</label>
+                    <div *ngIf="nombreError" class="text-danger">Debe completar el nombre</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Descripción</label>
                     <input [(ngModel)]="estado.descripcion" name="descripcion" type="text" class="form-control">
-                </div>
-                <div class="form-group">
+                    <div *ngIf="descripcionError" class="text-danger">Debe completar la descripción</div>
+                  </div>
+                  <div class="form-group">
                     <label for="">Color</label>
                     <input [(ngModel)]="estado.color" name="color" type="text" class="form-control">
-                </div>
+                    <div *ngIf="colorError" class="text-danger">El color debe tener máximo 6 caracteres</div>
+                  </div>
                 <br>
                 <button (click)="Actualizar(estado)" class="btn btn-danger" style="margin-left: 10px;">Actualizar</button>
                 <a href="/listar" class="btn btn-secondary" style="margin-left: 10px;">Volver</a>

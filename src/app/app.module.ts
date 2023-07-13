@@ -8,7 +8,6 @@ import { AddComponent } from './estado/add/add.component';
 import { EditComponent } from './estado/edit/edit.component';
 import { HomeComponent } from './home/home.component';
 import { EstadoComponent } from './estado/estado.component';
-import { InicioEstadoComponent } from './estado/inicio-estado/inicio-estado.component';
 import { FormsModule } from '@angular/forms';
 import { ServiceService } from './Service/service.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,8 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     AddComponent,
     EditComponent,
     HomeComponent,
-    EstadoComponent,
-    InicioEstadoComponent
+    EstadoComponent
   ],
   imports: [
     BrowserModule,

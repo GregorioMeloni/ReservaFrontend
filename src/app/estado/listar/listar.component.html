@@ -47,11 +47,13 @@
             </div>
             <div class="col-md-12 mb-3">
               <input type="text" class="form-control" id="valorBusqueda" [(ngModel)]="valorBusqueda" placeholder="Ingresar valor de búsqueda">
+              <div *ngIf="mostrarErrorValorBusqueda" class="text-danger">Debes ingresar un valor de búsqueda.</div>
             </div>
             <div class="col-md-12 mb-3">
               <button class="btn btn-primary mr-2" (click)="aplicarFiltro()">Aplicar filtro</button>
               <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar filtro</button>
             </div>
+            
           </div>
           
           <!-- Bloque de ordenamiento -->
