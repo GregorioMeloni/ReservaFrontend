@@ -10,12 +10,14 @@ import { ServiceService } from 'src/app/Service/service.service';
 })
 export class ListarComponent {
   filtroColumna = ''; // Valor inicializado para 'filtroColumna'
+  filtroAplicado = false;
   valorBusqueda = ''; // Valor inicializado para 'valorBusqueda'
   ordenSeleccionado = ''; // Valor inicializado para el orden
+  ordenAplicado = false;
   columnaSeleccionada = ''; // Valor inicializado para la columna de orden
   estados: Estado[];
   paginaActual = 0; // Página actual seleccionada
-  elementosPorPagina = 2; // Número de elementos por página
+  elementosPorPagina = 3; // Número de elementos por página
   totalPaginas = 0; // Total de páginas disponibles
 
   constructor(private service: ServiceService, private router: Router) {
@@ -35,7 +37,6 @@ export class ListarComponent {
       .subscribe(data => {
         this.estados = data.content;
         this.totalPaginas = Math.ceil(data.content.length / this.elementosPorPagina);
-        console.log(data);
       });
   }
 
@@ -53,52 +54,56 @@ export class ListarComponent {
     location.reload();
   }
 
-  aplicarFiltro() {
-    if (this.filtroColumna && this.valorBusqueda) {
-      if (this.filtroColumna === 'id') {
-        this.service.buscarEstadoPorId(Number(this.valorBusqueda))
-          .subscribe(data => {
-            this.estados = [data];
-            this.totalPaginas = 1;
-            console.log(data);
-          });
-      } else {
-        this.service.buscarEstados(this.filtroColumna, this.valorBusqueda)
-          .subscribe(data => {
-            this.estados = data.content;
-            this.totalPaginas = Math.ceil(data.content.length / this.elementosPorPagina);
-            console.log(data);
-          });
+  aplicarFiltro(){
+    this.filtroAplicado = true;
+    this.fetch();
+  }
+
+  fetch() {
+
+    if (this.filtroColumna === 'id') {
+      if(this.filtroAplicado){
+        this.paginaActual = 0;
+        this.service.getEstadoId(Number(this.valorBusqueda))
+        .subscribe(data => {
+          this.estados = [data];
+          this.totalPaginas = 1;
+        });
+      }else{
+        this.getEstados();
       }
     } else {
-      this.getEstados();
+      this.service.buscarEstados(this.filtroColumna, this.valorBusqueda, this.columnaSeleccionada,this.ordenSeleccionado,
+        this.filtroAplicado, this.ordenAplicado)
+        .subscribe(data => {
+          this.estados = data.content;
+          this.totalPaginas = Math.ceil(data.content.length / this.elementosPorPagina);
+        });
     }
   }
 
   limpiarFiltro() {
     this.filtroColumna = '';
     this.valorBusqueda = '';
+    this.filtroAplicado = false;
     this.getEstados();
   }
 
-  aplicarOrden() {
-    this.service.ordenarEstados(this.columnaSeleccionada, this.ordenSeleccionado)
-      .subscribe(data => {
-        this.estados = data.content;
-        this.totalPaginas = Math.ceil(data.content.length / this.elementosPorPagina);
-        console.log(data);
-      });
+  aplicarOrden(){
+    this.ordenAplicado = true;
+    this.fetch();
   }
 
   limpiarOrden() {
     this.columnaSeleccionada = '';
     this.ordenSeleccionado = '';
+    this.ordenAplicado = false;
     this.getEstados();
   }
 
   irAPagina(pagina: number) {
     this.paginaActual = pagina;
-    this.aplicarFiltro(); // O llama a this.aplicarOrden() si corresponde
+    this.fetch(); // O llama a this.aplicarOrden() si corresponde
   }
 
   paginasTotales() {

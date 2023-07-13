@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  
+  <title>Estados</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -28,59 +29,65 @@
       </div>
       <div class="card-body">
         <div class="form-row">
-          <h4>Búsqueda</h4>
-          <div class="col-md-4 mb-3">
-            <label for="filtroColumna"></label>
-            <div class="select-wrapper">
-              <select class="form-control" id="filtroColumna" [(ngModel)]="filtroColumna">
-                <option value="" disabled selected hidden>Seleccionar columna</option>
-                <option value="id">ID</option>
-                <option value="nombre">Nombre</option>
-                <option value="descripcion">Descripción</option>
-                <option value="color">Color</option>
-              </select>
-              <div class="select-arrow"></div>
+          <!-- Bloque de búsqueda -->
+          <div class="col-md-4 mb-3" style="margin-left: 0;">
+            <div class="col-md-12 mb-3">
+              <h4>Búsqueda</h4>
+              <label for="filtroColumna"></label>
+              <div class="select-wrapper">
+                <select class="form-control" id="filtroColumna" [(ngModel)]="filtroColumna">
+                  <option value="" disabled selected hidden>Seleccionar columna</option>
+                  <option value="id">ID</option>
+                  <option value="nombre">Nombre</option>
+                  <option value="descripcion">Descripción</option>
+                  <option value="color">Color</option>
+                </select>
+                <div class="select-arrow"></div>
+              </div>
+            </div>
+            <div class="col-md-12 mb-3">
+              <input type="text" class="form-control" id="valorBusqueda" [(ngModel)]="valorBusqueda" placeholder="Ingresar valor de búsqueda">
+            </div>
+            <div class="col-md-12 mb-3">
+              <button class="btn btn-primary mr-2" (click)="aplicarFiltro()">Aplicar filtro</button>
+              <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar filtro</button>
             </div>
           </div>
-          <div class="col-md-4 mb-3">
-            <input type="text" class="form-control" id="valorBusqueda" [(ngModel)]="valorBusqueda" placeholder="Ingresar valor de búsqueda">
-          </div>
-          <div class="col-md-4 mb-3">
-            <button class="btn btn-primary mr-2" (click)="aplicarFiltro()">Aplicar filtro</button>
-            <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar filtro</button>
+          
+          <!-- Bloque de ordenamiento -->
+          <div class="col-md-4 mb-3" style="margin-left: 0;">
+            <div class="col-md-12 mb-3">
+              <h4>Ordenamiento</h4>
+              <label for="ordenSeleccionado"></label>
+              <div class="select-wrapper">
+                <select class="form-control" id="ordenSeleccionado" [(ngModel)]="ordenSeleccionado">
+                  <option value="" disabled selected hidden>Seleccionar tipo de orden</option>
+                  <option value="asc">Ascendente</option>
+                  <option value="desc">Descendente</option>
+                </select>
+                <div class="select-arrow"></div>
+              </div>
+            </div>
+            <div class="col-md-12 mb-3">
+              <label for="columnaSeleccionada"></label>
+              <div class="select-wrapper">
+                <select class="form-control" id="columnaSeleccionada" [(ngModel)]="columnaSeleccionada">
+                  <option value="" disabled selected hidden>Seleccionar columna</option>
+                  <option value="id">ID</option>
+                  <option value="nombre">Nombre</option>
+                  <option value="descripcion">Descripción</option>
+                  <option value="color">Color</option>
+                </select>
+                <div class="select-arrow"></div>
+              </div>
+            </div>
+            <div class="col-md-12 mb-3">
+              <button class="btn btn-primary mr-2" (click)="aplicarOrden()">Aplicar orden</button>
+              <button class="btn btn-secondary" (click)="limpiarOrden()">Limpiar orden</button>
+            </div>
           </div>
         </div>
-        <div class="form-row">
-          <h4>Ordenamiento</h4>
-          <div class="col-md-4 mb-3">
-            <label for="ordenSeleccionado"></label>
-            <div class="select-wrapper">
-              <select class="form-control" id="ordenSeleccionado" [(ngModel)]="ordenSeleccionado">
-                <option value="" disabled selected hidden>Seleccionar tipo de orden</option>
-                <option value="asc">Ascendente</option>
-                <option value="desc">Descendente</option>
-              </select>
-              <div class="select-arrow"></div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="columnaSeleccionada"></label>
-            <div class="select-wrapper">
-              <select class="form-control" id="columnaSeleccionada" [(ngModel)]="columnaSeleccionada">
-                <option value="" disabled selected hidden>Seleccionar columna</option>
-                <option value="id">ID</option>
-                <option value="nombre">Nombre</option>
-                <option value="descripcion">Descripción</option>
-                <option value="color">Color</option>
-              </select>
-              <div class="select-arrow"></div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <button class="btn btn-primary mr-2" (click)="aplicarOrden()">Aplicar orden</button>
-            <button class="btn btn-secondary" (click)="limpiarOrden()">Limpiar orden</button>
-          </div>
-        </div>
+        
         <table class="table table-hover">
           <thead>
             <tr>
@@ -104,6 +111,7 @@
             </tr>
           </tbody>
         </table>
+        
         <nav>
           <ul class="pagination">
             <li class="page-item" [class.disabled]="paginaActual === 0">
@@ -120,6 +128,8 @@
       </div>
     </div>
   </div>
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>

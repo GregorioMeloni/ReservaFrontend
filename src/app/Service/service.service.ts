@@ -29,17 +29,18 @@ export class ServiceService {
     return this.http.delete<Estado>(this.Url + 'estado/' + estado.id);
   }
 
-  buscarEstados(columna: string, valor: string) {
-    const url = `${this.Url}estado?${columna}=${valor}&page=0&sort=id,asc`;
+  buscarEstados(columnaFiltro: string, valor: any,columnaOrden: string, orden: string, filtroAplicado: boolean, ordenAplicado: boolean) {
+    let url = this.Url+"estado?page=0";
+    if(filtroAplicado){
+      url = url + `&${columnaFiltro}=${valor}`;
+    }
+    if(ordenAplicado){
+      url = url + `&sort=${columnaOrden},${orden}`;
+    }else{
+      url = url + `&sort=id,asc`;
+    }
+
     return this.http.get<any>(url);
   }
 
-  buscarEstadoPorId(id: number) {
-    return this.http.get<Estado>(this.Url + 'estado/' + id);
-  }
-
-  ordenarEstados(columna: string, orden: string) {
-    const url = `${this.Url}estado?page=0&sort=${columna},${orden}`;
-    return this.http.get<any>(url);
-  }
 }

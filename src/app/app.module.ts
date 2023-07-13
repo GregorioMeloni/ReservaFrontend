@@ -12,7 +12,6 @@ import { InicioEstadoComponent } from './estado/inicio-estado/inicio-estado.comp
 import { FormsModule } from '@angular/forms';
 import { ServiceService } from './Service/service.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
