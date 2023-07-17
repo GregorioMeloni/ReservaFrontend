@@ -16,7 +16,7 @@
           <h4 class="alert-heading">Reservas</h4>
           <p>Reservas llevadas a cabo</p>
           <div class="col-12">
-            <button (click)="Nuevo()" class="btn btn-info" style="margin-left: 10px;">Nuevo</button>
+            <button (click)="nuevo()" class="btn btn-info" style="margin-left: 10px;">Nuevo</button>
             <a href="/" class="btn btn-secondary">Volver al inicio</a>
           </div>
         </div>
@@ -39,12 +39,10 @@
                 <select class="form-control" id="filtroColumna" [(ngModel)]="filtroColumna">
                   <option value="" disabled selected hidden>Seleccionar columna</option>
                   <option value="id">ID</option>
-                  <option value="duracion">Duracion</option>
                   <option value="comentario">Comentario</option>
                   <option value="clienteId">Cliente</option>
                   <option value="motivoReserva">Motivo Reserva</option>
                   <option value="estadoId">Estado</option>
-                  <option value="motivoRechazo">Motivo Rechazo</option>
                   <option value="espacioFisicoId">Espacio Fisico</option>
                 </select>
                 <div class="select-arrow"></div>
@@ -67,7 +65,7 @@
               <h4>Ordenamiento</h4>
               <label for="ordenSeleccionado"></label>
               <div class="select-wrapper">
-                <select class="form-control" id="ordenSeleccionado" [(ngModel)]="ordenSeleccionado">
+                <select class="form-control" id="ordenSeleccionado" [(ngModel)]="sortDir">
                   <option value="" disabled selected hidden>Seleccionar tipo de orden</option>
                   <option value="asc">Ascendente</option>
                   <option value="desc">Descendente</option>
@@ -78,7 +76,7 @@
             <div class="col-md-12 mb-3">
               <label for="columnaSeleccionada"></label>
               <div class="select-wrapper">
-                <select class="form-control" id="columnaSeleccionada" [(ngModel)]="columnaSeleccionada">
+                <select class="form-control" id="columnaSeleccionada" [(ngModel)]="sortColumn">
                   <option value="" disabled selected hidden>Seleccionar columna</option>
                   <option value="id">ID</option>
                   <option value="comentario">Comentario</option>
@@ -128,15 +126,15 @@
               <td>[{{reserva.estado.id}}] {{reserva.estado.nombre}}</td>
               <td>{{reserva.motivoReserva}}</td>
               <td>
-                <button (click)="Editar(reserva)" class="btn btn-warning">Editar</button>
-                <button (click)="Delete(reserva)" class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
+                <!-- <button (click)="Editar(reserva)" class="btn btn-warning">Editar</button>
+                <button (click)="Delete(reserva)" class="btn btn-danger" style="margin-left: 10px;">Eliminar</button> -->
               </td>
             </tr>
           </tbody>
         </table>
         <!--Paginación-->
         <nav>
-          <ul class="pagination">
+          <!-- <ul class="pagination">
             <li class="page-item" [class.disabled]="paginaActual === 0">
               <a class="page-link" (click)="irAPagina(paginaActual - 1)">Anterior</a>
             </li>
@@ -146,7 +144,7 @@
             <li class="page-item" [class.disabled]="paginaActual === totalPaginas - 1">
               <a class="page-link" (click)="irAPagina(paginaActual + 1)">Siguiente</a>
             </li>
-          </ul>
+          </ul> -->
         </nav>
       </div>
     </div>

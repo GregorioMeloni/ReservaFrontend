@@ -8,7 +8,7 @@ import { Estado } from '../Modelo/Estado';
 export class ServiceService {
   constructor(private http: HttpClient) { }
   //Url común a quienes lo utilicen
-  Url = 'http://localhost:9090/api/v1/';
+  Url = 'http://localhost:9500/api/v1/';
 
   //Trae todos los estados -> GET All
   getEstados() {

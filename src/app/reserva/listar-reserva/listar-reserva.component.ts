@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServiceService } from 'src/app/Service/service.service';
+import { Reserva, Page } from 'src/app/Modelo/Reserva';
+import { ReservaService } from 'src/app/Service/reserva.service';
 
 @Component({
   selector: 'app-listar-reserva',
@@ -11,98 +12,62 @@ export class ListarReservaComponent {
   filtroColumna = '';
   filtroAplicado = false;
   valorBusqueda = '';
-  ordenSeleccionado = '';
+  sortDir = 'asc';
+  sortColumn = 'id';
   ordenAplicado = false;
-  columnaSeleccionada = '';
-  estados: Estado[];
+  reservas: Reserva[];
   paginaActual = 0;
   elementosPorPagina = 3;
   totalPaginas = 0;
   mostrarErrorValorBusqueda = false;
 
-  constructor(private service: ServiceService, private router: Router) {
-    this.estados = [];
+  constructor(private service: ReservaService, private router: Router) {
+    this.reservas = [];
   }
 
   ngOnInit() {
-    this.getEstados();
+    this.getReservas();
   }
 
   //Botón Nuevo redirije a componente add
-  Nuevo() {
+  nuevo() {
     this.router.navigate(["add"]);
   }
 
   //Traigo todos los estados a la tabla
-  getEstados() {
-    this.service.getEstados()
-      .subscribe(data => {
-        this.estados = data.content;
-        this.totalPaginas = Math.ceil(data.content.length / this.elementosPorPagina);
-      });
+  getReservas() {
+    this.service.getReservas(this.paginaActual, this.sortColumn, this.sortDir, this.filtroColumna, this.valorBusqueda)
+      .subscribe((data: { content: Reserva[]; totalPages: number; }) => {
+        this.reservas = data.content;
+        this.totalPaginas = data.totalPages;
+      }
+    );
   }
 
-  //Botón Editar
-  Editar(estado: Estado): void {
-    localStorage.setItem('id', estado.id.toString());
-    this.router.navigate(['edit']);
-  }
+  // //Botón Editar
+  // Editar(estado: Estado): void {
+  //   localStorage.setItem('id', estado.id.toString());
+  //   this.router.navigate(['edit']);
+  // }
 
-  //Botón Eliminar
-  Delete(estado: Estado) {
-    this.service.deleteEstado(estado)
-      .subscribe(data => {
-        this.estados = this.estados.filter(e => e !== estado);
-      });
-    alert('Estado eliminado');
-    location.reload();
-  }
+  // //Botón Eliminar
+  // Delete(estado: Estado) {
+  //   this.service.deleteEstado(estado)
+  //     .subscribe(data => {
+  //       this.estados = this.estados.filter(e => e !== estado);
+  //     });
+  //   alert('Estado eliminado');
+  //   location.reload();
+  // }
 
   //Validación campo de valor de búsqueda y aplicaciónd del filtro
   aplicarFiltro() {
-    if (this.valorBusqueda.trim() !== '') {
-      this.filtroAplicado = true;
-      this.mostrarErrorValorBusqueda = false;
-      this.fetch();
-    } else {
-      this.mostrarErrorValorBusqueda = true;
-    }
+    this.getReservas();
   }
 
   //Se seleccionó un orden
   aplicarOrden() {
-    this.ordenAplicado = true;
-    this.fetch();
-  }
-
-  //Búsqueda en filtros y ordenamiento
-  fetch() {
-    if (this.filtroColumna === 'id') {
-      if (this.filtroAplicado) {
-        this.paginaActual = 0;
-        this.service.getEstadoId(Number(this.valorBusqueda))
-          .subscribe(data => {
-            this.estados = [data];
-            this.totalPaginas = 1;
-          });
-      } else {
-        this.getEstados();
-      }
-    } else {
-      this.service.buscarEstados(this.filtroColumna, this.valorBusqueda, this.columnaSeleccionada, this.ordenSeleccionado,
-        this.filtroAplicado, this.ordenAplicado)
-        .subscribe(data => {
-          this.estados = data.content.filter((estado: Estado) => {
-            return (
-              estado.nombre.toLowerCase().startsWith(this.valorBusqueda.toLowerCase()) ||
-              estado.descripcion.toLowerCase().startsWith(this.valorBusqueda.toLowerCase()) ||
-              estado.color.toLowerCase().startsWith(this.valorBusqueda.toLowerCase())
-            );
-          });
-  
-          this.totalPaginas = Math.ceil(this.estados.length / this.elementosPorPagina);
-        });
-    }
+    this.getReservas();
   }
 
   //Botón Limpiar filtro
@@ -111,27 +76,21 @@ export class ListarReservaComponent {
     this.valorBusqueda = '';
     this.filtroAplicado = false;
     this.mostrarErrorValorBusqueda = false;
-    this.getEstados();
+    this.getReservas();
   }
 
   //Botón Limpiar Orden
   limpiarOrden() {
-    this.columnaSeleccionada = '';
-    this.ordenSeleccionado = '';
+    this.sortColumn = '';
     this.ordenAplicado = false;
-    this.getEstados();
+    this.getReservas();
   }
 
   //Pasaje entre páginas
   irAPagina(pagina: number) {
     this.paginaActual = pagina;
-    this.fetch();
+    this.getReservas();
   }
-  //Cantidad de páginas
-  paginasTotales() {
-    return Array(this.totalPaginas).fill(0).map((x, i) => i);
-  }
-
 
   parseDate(date: Date): string {
     let dateString: string = date.toString();
