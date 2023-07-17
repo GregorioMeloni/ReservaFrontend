@@ -11,6 +11,11 @@ import { EstadoComponent } from './estado/estado.component';
 import { FormsModule } from '@angular/forms';
 import { ServiceService } from './Service/service.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ErrorComponent } from './error/error.component';
+import { ReservaComponent } from './reserva/reserva.component';
+import { AddReservaComponent } from './reserva/add-reserva/add-reserva.component';
+import { EditReservaComponent } from './reserva/edit-reserva/edit-reserva.component';
+import { ListarReservaComponent } from './reserva/listar-reserva/listar-reserva.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,12 @@ import { HttpClientModule } from '@angular/common/http';
     AddComponent,
     EditComponent,
     HomeComponent,
-    EstadoComponent
+    EstadoComponent,
+    ErrorComponent,
+    ReservaComponent,
+    AddReservaComponent,
+    EditReservaComponent,
+    ListarReservaComponent
   ],
   imports: [
     BrowserModule,

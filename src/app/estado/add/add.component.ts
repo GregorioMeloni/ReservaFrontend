@@ -17,18 +17,18 @@ export class AddComponent {
   constructor(private router: Router, private service: ServiceService) {}
 
   ngOnInit() {}
-
+  //Botón Guardar
   Guardar(estado: Estado) {
     if (!this.validarCampos()) {
       return;
     }
-
-    this.service.createEstado(estado).subscribe(data => {
+    console.log(estado)
+    /* this.service.createEstado(estado).subscribe(data => {
       alert('Agregado con éxito');
       this.router.navigate(['listar']);
-    });
+    }); */
   }
-
+  //Validación Campos Forms
   validarCampos(): boolean {
     let isValid = true;
 
@@ -45,8 +45,8 @@ export class AddComponent {
     } else {
       this.descripcionError = false;
     }
-
-    if (!this.estado.color || this.estado.color.length > 6) {
+    ////7
+    if (!this.estado.color || this.estado.color.length > 7) {
       this.colorError = true;
       isValid = false;
     } else {

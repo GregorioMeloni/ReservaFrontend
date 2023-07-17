@@ -1,0 +1,85 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    /* three items per row */
+    > div {
+      flex-basis: 75%;
+    }
+  }
+  
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .btn {
+    margin: 0 10px;
+    border-radius: 10px;
+    width: 200px;
+    height: 200px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  
+    i {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+  }
+  
+  .btn-roles {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn-estados {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .btn-reservations {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .btn-recursos {
+    background-color: #ffc107;
+    color: #fff;
+  }
+  
+  .btn-espacios-fisicos {
+    background-color: #17a2b8;
+    color: #fff;
+  }
+  
+  .btn-clientes {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+  }
+  
+  /* On smaller screens, make it two rows */
+  @media screen and (max-width: 1900px) {
+    .btn {
+      width: 80%;
+    }
+  
+    .container {
+      height: 100%;
+    }
+  }
+  

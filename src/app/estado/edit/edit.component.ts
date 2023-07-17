@@ -19,14 +19,14 @@ export class EditComponent {
   ngOnInit() {
     this.Editar();
   }
-
+  //Botón editar del listar
   Editar() {
     let id = Number(localStorage.getItem('id') || '');
     this.service.getEstadoId(id).subscribe(data => {
       this.estado = data;
     });
   }
-
+  //Botón Actualizar del Form
   Actualizar(estado: Estado) {
     if (!this.validarCampos()) {
       return;
@@ -38,7 +38,7 @@ export class EditComponent {
       this.router.navigate(['listar']);
     });
   }
-
+  //Validación Campos Forms
   validarCampos(): boolean {
     let isValid = true;
 

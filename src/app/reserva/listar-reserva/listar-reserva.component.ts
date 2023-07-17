@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Estado } from 'src/app/Modelo/Estado';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
-  selector: 'app-listar',
-  templateUrl: './listar.component.html',
-  styleUrls: ['./listar.component.scss']
+  selector: 'app-listar-reserva',
+  templateUrl: './listar-reserva.component.html',
+  styleUrls: ['./listar-reserva.component.scss']
 })
-export class ListarComponent {
+export class ListarReservaComponent {
   filtroColumna = '';
   filtroAplicado = false;
   valorBusqueda = '';
@@ -132,4 +131,23 @@ export class ListarComponent {
   paginasTotales() {
     return Array(this.totalPaginas).fill(0).map((x, i) => i);
   }
+
+
+  parseDate(date: Date): string {
+    let dateString: string = date.toString();
+    return new Date(dateString).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
+  parseTime(horaInicio: Date, horaFin: Date): string {
+    let horaInicioString: string = horaInicio.toString();
+    let horaFinString: string = horaFin.toString();
+    return new Date(horaInicioString).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) + 
+      " - " + new Date(horaFinString).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+  parseMinutes(minutes: number): string {
+    let hours = Math.floor(minutes / 60);
+    let minutesLeft = minutes % 60;
+    return hours + ":" + minutesLeft.toString().padStart(2, '0');
+  }
+
 }
