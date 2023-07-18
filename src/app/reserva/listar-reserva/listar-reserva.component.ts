@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Reserva, Page } from 'src/app/Modelo/Reserva';
+import { Reserva } from 'src/app/Modelo/Reserva';
 import { ReservaService } from 'src/app/Service/reserva.service';
 
 @Component({
@@ -21,20 +21,22 @@ export class ListarReservaComponent {
   totalPaginas = 0;
   mostrarErrorValorBusqueda = false;
 
+  // Inyección de dependencias
   constructor(private service: ReservaService, private router: Router) {
     this.reservas = [];
   }
 
+  // Al iniciar el componente, se obtienen las reservas
   ngOnInit() {
     this.getReservas();
   }
 
-  //Botón Nuevo redirije a componente add
+  // Botón Nuevo redirije a componente add
   nuevo() {
     this.router.navigate(["add"]);
   }
 
-  //Traigo todos los estados a la tabla
+  // Obtener reservas con paginación y ordenamiento
   getReservas() {
     this.service.getReservas(this.paginaActual, this.sortColumn, this.sortDir, this.filtroColumna, this.valorBusqueda)
       .subscribe((data: { content: Reserva[]; totalPages: number; }) => {
@@ -44,21 +46,21 @@ export class ListarReservaComponent {
     );
   }
 
-  // //Botón Editar
-  // Editar(estado: Estado): void {
-  //   localStorage.setItem('id', estado.id.toString());
-  //   this.router.navigate(['edit']);
-  // }
+  // Botón Editar
+  editar(reserva: Reserva): void {
+    localStorage.setItem('id', reserva.id.toString());
+    this.router.navigate(['edit']);
+  }
 
-  // //Botón Eliminar
-  // Delete(estado: Estado) {
-  //   this.service.deleteEstado(estado)
-  //     .subscribe(data => {
-  //       this.estados = this.estados.filter(e => e !== estado);
-  //     });
-  //   alert('Estado eliminado');
-  //   location.reload();
-  // }
+  //Botón Eliminar
+  delete(reserva: Reserva) {
+    this.service.deleteReserva(reserva)
+      .subscribe(data => {
+        this.reservas = this.reservas.filter(e => e !== reserva);
+      });
+    alert('Estado eliminado');
+    location.reload();
+  }
 
   //Validación campo de valor de búsqueda y aplicaciónd del filtro
   aplicarFiltro() {
@@ -79,14 +81,22 @@ export class ListarReservaComponent {
     this.getReservas();
   }
 
-  //Botón Limpiar Orden
+  // Botón Limpiar Orden
   limpiarOrden() {
     this.sortColumn = '';
     this.ordenAplicado = false;
     this.getReservas();
   }
 
-  //Pasaje entre páginas
+  getArrayPaginas() {
+    let arrayPaginas = [];
+    for (let i = 0; i < this.totalPaginas; i++) {
+      arrayPaginas.push(i);
+    }
+    return arrayPaginas;
+  }
+
+  // Pasaje entre páginas
   irAPagina(pagina: number) {
     this.paginaActual = pagina;
     this.getReservas();

@@ -7,23 +7,24 @@
 </head>
 
 <body>
-  <br>
   <!-- Bloque de Presentación -->
-  <div class="container">
+  <div class="container-lg mt-5">
     <div class="row">
       <div class="col-12">
         <div class="alert alert-primary" role="alert">
           <h4 class="alert-heading">Reservas</h4>
           <p>Reservas llevadas a cabo</p>
-          <div class="col-12">
-            <button (click)="nuevo()" class="btn btn-info" style="margin-left: 10px;">Nuevo</button>
-            <a href="/" class="btn btn-secondary">Volver al inicio</a>
+          <div>
+            <button (click)="nuevo()" class="btn btn-info">Nuevo</button>
+            <button href="/" class="btn btn-secondary ml-2">Volver al inicio</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="container">
+
+  <!-- Bloque de listado -->
+  <div class="container-lg">
     <div class="card">
       <div class="card-header">
         <h3>Reservas</h3>
@@ -31,75 +32,66 @@
       <div class="card-body">
         <div class="form-row">
           <!-- Bloque de búsqueda -->
-          <div class="col-md-4 mb-3" style="margin-left: 0;">
-            <div class="col-md-12 mb-3">
-              <h4>Búsqueda</h4>
-              <label for="filtroColumna"></label>
-              <div class="select-wrapper">
-                <select class="form-control" id="filtroColumna" [(ngModel)]="filtroColumna">
-                  <option value="" disabled selected hidden>Seleccionar columna</option>
-                  <option value="id">ID</option>
-                  <option value="comentario">Comentario</option>
-                  <option value="clienteId">Cliente</option>
-                  <option value="motivoReserva">Motivo Reserva</option>
-                  <option value="estadoId">Estado</option>
-                  <option value="espacioFisicoId">Espacio Fisico</option>
-                </select>
-                <div class="select-arrow"></div>
-              </div>
+          <div class="input-group">
+            <div class="input-group-prepend input-group-span">
+              <span class="input-group-text">Búsqueda</span>
             </div>
-            <div class="col-md-12 mb-3">
-              <input type="text" class="form-control" id="valorBusqueda" [(ngModel)]="valorBusqueda" placeholder="Ingresar valor de búsqueda">
-              <div *ngIf="mostrarErrorValorBusqueda" class="text-danger">Debes ingresar un valor de búsqueda.</div>
+          
+            <select class="custom-select" id="filtroColumna" [(ngModel)]="filtroColumna">
+              <option value="" disabled selected hidden>Seleccionar columna</option>
+              <option value="id">ID</option>
+              <option value="comentario">Comentario</option>
+              <option value="clienteId">Cliente</option>
+              <option value="motivoReserva">Motivo Reserva</option>
+              <option value="estadoId">Estado</option>
+              <option value="espacioFisicoId">Espacio Fisico</option>
+            </select>
+          
+            <input type="text" class="form-control" id="valorBusqueda" [(ngModel)]="valorBusqueda" placeholder="Ingresar valor de búsqueda">
+            <div *ngIf="mostrarErrorValorBusqueda" class="text-danger">Debes ingresar un valor de búsqueda.</div>
+          
+            <div class="input-group-append input-group-buttons">
+              <button class="btn btn-primary" type="button" (click)="aplicarFiltro()">Aplicar filtro</button>
+              <button class="btn btn-secondary" type="button" (click)="limpiarFiltro()">Limpiar filtro</button>
             </div>
-            <div class="col-md-12 mb-3">
-              <button class="btn btn-primary mr-2" (click)="aplicarFiltro()">Aplicar filtro</button>
-              <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar filtro</button>
-            </div>
-            
           </div>
           
+          
           <!-- Bloque de ordenamiento -->
-          <div class="col-md-4 mb-3" style="margin-left: 0;">
-            <div class="col-md-12 mb-3">
-              <h4>Ordenamiento</h4>
-              <label for="ordenSeleccionado"></label>
-              <div class="select-wrapper">
-                <select class="form-control" id="ordenSeleccionado" [(ngModel)]="sortDir">
-                  <option value="" disabled selected hidden>Seleccionar tipo de orden</option>
-                  <option value="asc">Ascendente</option>
-                  <option value="desc">Descendente</option>
-                </select>
-                <div class="select-arrow"></div>
-              </div>
+          <div class="input-group mt-3">
+            <div class="input-group-prepend input-group-span">
+              <span class="input-group-text">Ordenamiento</span>
             </div>
-            <div class="col-md-12 mb-3">
-              <label for="columnaSeleccionada"></label>
-              <div class="select-wrapper">
-                <select class="form-control" id="columnaSeleccionada" [(ngModel)]="sortColumn">
-                  <option value="" disabled selected hidden>Seleccionar columna</option>
-                  <option value="id">ID</option>
-                  <option value="comentario">Comentario</option>
-                  <option value="cliente">Cliente</option>
-                  <option value="motivoReserva">Motivo Reserva</option>
-                  <option value="estado">Estado</option>
-                  <option value="motivoRechazo">Motivo Rechazo</option>
-                  <option value="espacioFisico">Espacio Fisico</option>
-                  <option value="fechaHoraInicio">Fecha-Hora Inicio</option>
-                  <option value="fechaHoraCreacion">Fecha-Hora Creacion</option>
-                  <option value="fechaHoraFin">Fecha-Hora Fin</option>
-                </select>
-                <div class="select-arrow"></div>
-              </div>
-            </div>
-            <div class="col-md-12 mb-3">
-              <button class="btn btn-primary mr-2" (click)="aplicarOrden()">Aplicar orden</button>
-              <button class="btn btn-secondary" (click)="limpiarOrden()">Limpiar orden</button>
+            
+            <select class="custom-select" id="ordenSeleccionado" [(ngModel)]="sortDir">
+              <option value="" disabled selected hidden>Seleccionar tipo de orden</option>
+              <option value="asc">Ascendente</option>
+              <option value="desc">Descendente</option>
+            </select>
+            
+            <select class="custom-select" id="columnaSeleccionada" [(ngModel)]="sortColumn">
+              <option value="" disabled selected hidden>Seleccionar columna</option>
+              <option value="id">ID</option>
+              <option value="comentario">Comentario</option>
+              <option value="cliente">Cliente</option>
+              <option value="motivoReserva">Motivo Reserva</option>
+              <option value="estado">Estado</option>
+              <option value="motivoRechazo">Motivo Rechazo</option>
+              <option value="espacioFisico">Espacio Fisico</option>
+              <option value="fechaHoraInicio">Fecha-Hora Inicio</option>
+              <option value="fechaHoraCreacion">Fecha-Hora Creacion</option>
+              <option value="fechaHoraFin">Fecha-Hora Fin</option>
+            </select>
+            
+            <div class="input-group-append input-group-buttons">
+              <button class="btn btn-primary" type="button" (click)="aplicarOrden()">Aplicar orden</button>
+              <button class="btn btn-secondary" type="button" (click)="limpiarOrden()">Limpiar orden</button>
             </div>
           </div>
-        </div>
+        </div>          
+
         <!--Tabla-->
-        <table class="table table-hover">
+        <table class="table table-hover mt-4">
           <thead>
             <tr>
               <th scope="col">ID</th>
@@ -126,26 +118,28 @@
               <td>[{{reserva.estado.id}}] {{reserva.estado.nombre}}</td>
               <td>{{reserva.motivoReserva}}</td>
               <td>
-                <!-- <button (click)="Editar(reserva)" class="btn btn-warning">Editar</button>
-                <button (click)="Delete(reserva)" class="btn btn-danger" style="margin-left: 10px;">Eliminar</button> -->
+                <button (click)="editar(reserva)" class="btn btn-warning">Editar</button>
+                <button (click)="delete(reserva)" class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
               </td>
             </tr>
           </tbody>
         </table>
+
         <!--Paginación-->
-        <nav>
-          <!-- <ul class="pagination">
+        <div class="d-flex justify-content-center">
+          <ul class="pagination">
             <li class="page-item" [class.disabled]="paginaActual === 0">
               <a class="page-link" (click)="irAPagina(paginaActual - 1)">Anterior</a>
             </li>
-            <li class="page-item" *ngFor="let pagina of paginasTotales() ; let i = index" [class.active]="pagina === paginaActual">
-              <a class="page-link" (click)="irAPagina(pagina)">{{pagina + 1}}</a>
+            <li class="page-item" *ngFor="let numeroPagina of getArrayPaginas()" [class.active]="numeroPagina === paginaActual">
+              <a class="page-link" (click)="irAPagina(numeroPagina)">{{numeroPagina + 1}}</a>
             </li>
             <li class="page-item" [class.disabled]="paginaActual === totalPaginas - 1">
               <a class="page-link" (click)="irAPagina(paginaActual + 1)">Siguiente</a>
             </li>
-          </ul> -->
-        </nav>
+          </ul>
+        </div>
+
       </div>
     </div>
   </div>
