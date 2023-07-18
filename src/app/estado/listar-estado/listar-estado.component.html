@@ -2,18 +2,18 @@
 <html>
 
 <head>
-  <title>Reservas</title>
+  <title>Estados</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
 <body>
   <!-- Bloque de Presentación -->
-  <div class="container-lg mt-5">
+  <div class="container mt-5">
     <div class="row">
       <div class="col-12">
         <div class="alert alert-primary" role="alert">
-          <h4 class="alert-heading">Reservas</h4>
-          <p>Reservas llevadas a cabo</p>
+          <h4 class="alert-heading">Estados</h4>
+          <p>Los estados son una forma de determinar en qué situación se encuentra por ejemplo una reserva.</p>
           <div>
             <button (click)="nuevo()" class="btn btn-info">Nuevo</button>
             <a href="/" class="btn btn-secondary ml-2">Volver al inicio</a>
@@ -24,10 +24,10 @@
   </div>
 
   <!-- Bloque de listado -->
-  <div class="container-lg">
+  <div class="container">
     <div class="card">
       <div class="card-header">
-        <h3>Reservas</h3>
+        <h3>Estados</h3>
       </div>
       <div class="card-body">
         <div class="form-row">
@@ -37,17 +37,15 @@
             <div class="input-group-prepend input-group-span">
               <span class="input-group-text">Búsqueda</span>
             </div>
-          
+
             <select class="custom-select" id="filtroColumna" [(ngModel)]="filtroColumna">
               <option value="" disabled selected hidden>Seleccionar columna</option>
-              <option value="id">ID</option>
-              <option value="comentario">Comentario</option>
-              <option value="clienteId">Cliente</option>
-              <option value="motivoReserva">Motivo Reserva</option>
-              <option value="estadoId">Estado</option>
-              <option value="espacioFisicoId">Espacio Fisico</option>
+                  <option value="id">ID</option>
+                  <option value="nombre">Nombre</option>
+                  <option value="descripcion">Descripción</option>
+                  <option value="color">Color</option>
             </select>
-          
+
             <input type="text" class="form-control" id="valorBusqueda" [(ngModel)]="valorBusqueda" placeholder="Ingresar valor de búsqueda">
             <div *ngIf="mostrarErrorValorBusqueda" class="text-danger">Debes ingresar un valor de búsqueda.</div>
           
@@ -57,70 +55,53 @@
             </div>
           </div>
           
-          
           <!-- Bloque de ordenamiento -->
           <div class="input-group mt-3">
             <div class="input-group-prepend input-group-span">
               <span class="input-group-text">Ordenamiento</span>
             </div>
-            
+
             <select class="custom-select" id="ordenSeleccionado" [(ngModel)]="sortDir">
               <option value="" disabled selected hidden>Seleccionar tipo de orden</option>
               <option value="asc">Ascendente</option>
               <option value="desc">Descendente</option>
             </select>
-            
+
             <select class="custom-select" id="columnaSeleccionada" [(ngModel)]="sortColumn">
               <option value="" disabled selected hidden>Seleccionar columna</option>
               <option value="id">ID</option>
-              <option value="comentario">Comentario</option>
-              <option value="cliente">Cliente</option>
-              <option value="motivoReserva">Motivo Reserva</option>
-              <option value="estado">Estado</option>
-              <option value="motivoRechazo">Motivo Rechazo</option>
-              <option value="espacioFisico">Espacio Fisico</option>
-              <option value="fechaHoraInicio">Fecha-Hora Inicio</option>
-              <option value="fechaHoraCreacion">Fecha-Hora Creacion</option>
-              <option value="fechaHoraFin">Fecha-Hora Fin</option>
+              <option value="nombre">Nombre</option>
+              <option value="descripcion">Descripción</option>
+              <option value="color">Color</option>
             </select>
-            
+
             <div class="input-group-append input-group-buttons">
               <button class="btn btn-primary" type="button" (click)="aplicarOrden()">Aplicar orden</button>
               <button class="btn btn-secondary" type="button" (click)="limpiarOrden()">Limpiar orden</button>
             </div>
           </div>
-        </div>          
+        </div>
 
         <!-- Tabla -->
         <table class="table table-hover mt-4">
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Espacio Fisico</th>
-              <th scope="col">Cliente</th>
-              <th scope="col">Fecha Inicio</th>
-              <th scope="col">Fecha Fin</th>
-              <th scope="col">Horario</th>
-              <th scope="col">Duracion</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Motivo Reserva</th>
-              <th scope="col">Acciones</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Color</th>
+              <th scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let reserva of reservas">
-              <td scope="row">{{reserva.id}}</td>
-              <td scope="row">[{{reserva.espacioFisico.id}}] {{reserva.espacioFisico.nombre}}</td>
-              <td scope="row">[{{reserva.cliente.id}}] {{reserva.cliente.nombre}}</td>
-              <td scope="row">{{parseDate(reserva.fechaHoraInicio)}}</td>
-              <td scope="row">{{parseDate(reserva.fechaHoraFin)}}</td>
-              <td scope="row">{{parseTime(reserva.fechaHoraInicio, reserva.fechaHoraFin)}}</td>
-              <td scope="row">{{parseMinutes(reserva.duracion)}}</td>
-              <td scope="row">[{{reserva.estado.id}}] {{reserva.estado.nombre}}</td>
-              <td scope="row">{{reserva.motivoReserva}}</td>
+            <tr *ngFor="let estado of estados">
+              <td scope="row">{{estado.id}}</td>
+              <td scope="row">{{estado.nombre}}</td>
+              <td scope="row">{{estado.descripcion}}</td>
+              <td scope="row" [style.color]="estado.color">{{estado.color}}</td>
               <td scope="row">
-                <button (click)="editar(reserva)" class="btn btn-warning">Editar</button>
-                <button (click)="delete(reserva)" class="btn btn-danger ml-2">Eliminar</button>
+                <button (click)="editar(estado)" class="btn btn-warning">Editar</button>
+                <button (click)="delete(estado)" class="btn btn-danger ml-2">Eliminar</button>
               </td>
             </tr>
           </tbody>

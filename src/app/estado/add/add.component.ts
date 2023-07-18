@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Estado } from 'src/app/Modelo/Estado';
-import { ServiceService } from 'src/app/Service/service.service';
+import { Estado } from 'src/app/model/types';
+import { EstadoService } from 'src/app/service/estado.service';
 
 @Component({
   selector: 'app-add',
@@ -9,25 +9,31 @@ import { ServiceService } from 'src/app/Service/service.service';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent {
-  estado: Estado = new Estado();
+  estado: Estado = {
+    id: 0,
+    nombre: '',
+    descripcion: '',
+    color: ''
+  };
   nombreError: boolean = false;
   descripcionError: boolean = false;
   colorError: boolean = false;
 
-  constructor(private router: Router, private service: ServiceService) {}
+  constructor(private router: Router, private service: EstadoService) {}
 
   ngOnInit() {}
+
   //Botón Guardar
-  Guardar(estado: Estado) {
+  guardar(estado: Estado) {
     if (!this.validarCampos()) {
       return;
     }
-    console.log(estado)
-    /* this.service.createEstado(estado).subscribe(data => {
+    this.service.createEstado(estado).subscribe(data => {
       alert('Agregado con éxito');
       this.router.navigate(['listar']);
-    }); */
+    });
   }
+
   //Validación Campos Forms
   validarCampos(): boolean {
     let isValid = true;

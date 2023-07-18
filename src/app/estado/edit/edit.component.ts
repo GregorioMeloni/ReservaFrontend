@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Estado } from 'src/app/Modelo/Estado';
-import { ServiceService } from 'src/app/Service/service.service';
+import { Estado } from 'src/app/model/types';
+import { EstadoService } from 'src/app/service/estado.service';
 
 @Component({
   selector: 'app-edit',
@@ -9,12 +9,17 @@ import { ServiceService } from 'src/app/Service/service.service';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent {
-  estado: Estado = new Estado();
+  estado: Estado = {
+    id: 0,
+    nombre: '',
+    descripcion: '',
+    color: ''
+  };
   nombreError: boolean = false;
   descripcionError: boolean = false;
   colorError: boolean = false;
 
-  constructor(private router: Router, private service: ServiceService) {}
+  constructor(private router: Router, private service: EstadoService) {}
 
   ngOnInit() {
     this.Editar();
@@ -27,7 +32,7 @@ export class EditComponent {
     });
   }
   //Botón Actualizar del Form
-  Actualizar(estado: Estado) {
+  actualizar(estado: Estado) {
     if (!this.validarCampos()) {
       return;
     }
@@ -37,6 +42,7 @@ export class EditComponent {
       alert('Se ha actualizado');
       this.router.navigate(['listar']);
     });
+
   }
   //Validación Campos Forms
   validarCampos(): boolean {
@@ -56,12 +62,15 @@ export class EditComponent {
       this.descripcionError = false;
     }
 
-    if (!this.estado.color || this.estado.color.length > 6) {
+    if (!this.estado.color || this.estado.color.length > 7) {
       this.colorError = true;
       isValid = false;
     } else {
       this.colorError = false;
     }
+
+    this.estado.color = this.estado.color.toUpperCase();
+    this.estado.nombre = this.estado.nombre.trim();
 
     return isValid;
   }
