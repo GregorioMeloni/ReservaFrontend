@@ -33,7 +33,7 @@ export class ListarReservaComponent {
 
   // Botón Nuevo redirije a componente add
   nuevo() {
-    this.router.navigate(["add"]);
+    this.router.navigate(["add-reserva"]);
   }
 
   // Obtener reservas con paginación y ordenamiento

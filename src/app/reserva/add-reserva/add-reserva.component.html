@@ -1,1 +1,55 @@
-<p>add-reserva works!</p>
+<br><br>
+<div class="container col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h3>Agregar Reservas</h3>
+        </div>
+        <div class="card-body">
+            <form action="">
+                <div class="form-group">
+                    <label for="">Fecha-Hora Inicio</label>
+                    <input [(ngModel)]="reserva.fechaHoraInicio" name="fechaHoraInicio" type="text" class="form-control">
+                    <div *ngIf="fechaHoraInicioError" class="text-danger">Debe completar la Fecha-Hora Inicio</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Fecha-Hora Fin</label>
+                    <input [(ngModel)]="reserva.fechaHoraFin" name="fechaHoraFin" type="text" class="form-control">
+                    <div *ngIf="fechaHoraFinError" class="text-danger">Debe completar la Fecha-Hora Fin</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Comentario</label>
+                    <input [(ngModel)]="reserva.comentario" name="comentario" type="text" class="form-control">
+                    <div *ngIf="comentarioError" class="text-danger">Debe completar el Comentario</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Motivo Reserva</label>
+                    <input [(ngModel)]="reserva.motivoReserva" name="motivoReserva" type="text" class="form-control">
+                    <div *ngIf="motivoReservaError" class="text-danger">Debe completar motivo Reserva</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Motivo Rechazo</label>
+                    <input [(ngModel)]="reserva.motivoRechazo" name="motivoRechazo" type="text" class="form-control">
+                    <div *ngIf="motivoRechazoError" class="text-danger">Debe completar motivo Rechazo</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Cliente</label>
+                    <input [(ngModel)]="reserva.cliente.nombre" name="cliente" type="text" class="form-control">
+                    <div *ngIf="clienteError" class="text-danger">Debe completar Cliente</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Estado</label>
+                    <input [(ngModel)]="reserva.estado.nombre" name="estado" type="text" class="form-control">
+                    <div *ngIf="estadoError" class="text-danger">Debe completar Estado</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Espacio Fisico</label>
+                    <input [(ngModel)]="reserva.espacioFisico.nombre" name="espacioFisico" type="text" class="form-control">
+                    <div *ngIf="espacioFisicoError" class="text-danger">Debe completar Espacio Fisico</div>
+                  </div>
+                <br>
+                <button (click)="Guardar(reserva)" class="btn btn-danger" style="margin-left: 10px;">Guardar</button>
+                <a href="/listar" class="btn btn-secondary" style="margin-left: 10px;">Volver</a>
+            </form>
+        </div>
+    </div>
+</div>

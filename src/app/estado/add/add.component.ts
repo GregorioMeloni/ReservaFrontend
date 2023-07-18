@@ -45,7 +45,7 @@ export class AddComponent {
     } else {
       this.descripcionError = false;
     }
-    ////7
+    
     if (!this.estado.color || this.estado.color.length > 7) {
       this.colorError = true;
       isValid = false;
