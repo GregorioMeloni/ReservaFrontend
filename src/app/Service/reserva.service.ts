@@ -44,8 +44,19 @@ export class ReservaService {
 
   // Crea una reserva -> POST Create
   createReserva(reserva: Reserva) {
-    return this.http.post<Reserva>(this.apiUrl, reserva);
+    let nuevaReserva: NuevaReserva = {
+      fechaHoraInicio: reserva.fechaHoraInicio,
+      fechaHoraFin: reserva.fechaHoraFin,
+      espacioFisico: { id: reserva.espacioFisico.id },
+      cliente: { id: reserva.cliente.id },
+      motivoReserva: reserva.motivoReserva,
+      comentario: reserva.comentario,
+      motivoRechazo: reserva.motivoRechazo
+    };
+  
+    return this.http.post<Reserva>(this.apiUrl, nuevaReserva);
   }
+  
 
   // Actualiza una reserva -> PUT Update
   updateReserva(reserva: Reserva) {
@@ -57,4 +68,14 @@ export class ReservaService {
     return this.http.delete<Reserva>(this.apiUrl + "/" + reserva.id);
   }
 
+}
+
+export interface NuevaReserva {
+  fechaHoraInicio: Date;
+  fechaHoraFin: Date;
+  espacioFisico: {id: number};
+  cliente: {id: number};
+  motivoReserva: string;
+  comentario: string;
+  motivoRechazo: string;
 }

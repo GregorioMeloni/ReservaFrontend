@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Reserva } from 'src/app/Modelo/Reserva';
-import { ReservaService } from 'src/app/Service/reserva.service';
+import { Cliente, EspacioFisico, Reserva } from 'src/app/model/types';
+import { ClienteService } from 'src/app/service/cliente.service';
+import { EspacioFisicoService } from 'src/app/service/espacio-fisico.service';
+import { ReservaService } from 'src/app/service/reserva.service';
 
 @Component({
   selector: 'app-add-reserva',
@@ -49,22 +51,22 @@ export class AddReservaComponent {
   
   fechaHoraInicioError: boolean = false;
   fechaHoraFinError: boolean = false;
-  comentarioError: boolean = false;
   motivoReservaError : boolean = false;
-  motivoRechazoError : boolean = false;
-  clienteError : boolean = false;
-  estadoError : boolean = false;
-  espacioFisicoError : boolean = false;
 
-  constructor(private router: Router, private service: ReservaService) {}
+  clientes: Cliente[] = [];
+  espaciosFisicos: EspacioFisico[] = [];
 
-  ngOnInit() {}
+  constructor(private router: Router, private service: ReservaService, private clienteService: ClienteService, private espacioFisicoService: EspacioFisicoService) {}
+
+  ngOnInit() {
+    this.getClientes();
+    this.getEspaciosFisicos();
+  }
   //Botón Guardar
   Guardar(reserva: Reserva) {
     if (!this.validarCampos()) {
       return;
     }
-    console.log(reserva)
     this.service.createReserva(reserva).subscribe(data => {
       alert('Agregado con éxito');
       this.router.navigate(['listar-reserva']);
@@ -88,13 +90,6 @@ export class AddReservaComponent {
       this.fechaHoraFinError = false;
     }
     
-    if (!this.reserva.comentario) {
-      this.comentarioError = true;
-      isValid = false;
-    } else {
-      this.comentarioError = false;
-    }
-    
     if (!this.reserva.motivoReserva) {
       this.motivoReservaError = true;
       isValid = false;
@@ -102,35 +97,30 @@ export class AddReservaComponent {
       this.motivoReservaError = false;
     }
 
-    if (!this.reserva.motivoRechazo) {
-      this.motivoRechazoError = true;
-      isValid = false;
-    } else {
-      this.motivoRechazoError = false;
-    }
-    
-    if (!this.reserva.cliente.nombre) {
-      this.clienteError = true;
-      isValid = false;
-    } else {
-      this.clienteError = false;
-    }
-    
-    if (!this.reserva.estado.nombre) {
-      this.estadoError = true;
-      isValid = false;
-    } else {
-      this.estadoError = false;
-    }
-
-    if (!this.reserva.espacioFisico.nombre) {
-      this.espacioFisicoError = true;
-      isValid = false;
-    } else {
-      this.espacioFisicoError = false;
-    }
-
 
     return isValid;
   }
+
+  getClientes() {
+    this.clienteService.getClientes(0, "id", "asc", " ", " ").subscribe(
+      (data) => {
+        this.clientes = data.content;
+      },
+      (error) => {
+        console.error('Error al obtener los clientes:', error);
+      }
+    );
+  }
+  
+  getEspaciosFisicos() {
+    this.espacioFisicoService.getEspaciosFisicos(0, "id", "asc", " ", " ").subscribe(
+      (data) => {
+        this.espaciosFisicos = data.content;
+      },
+      (error) => {
+        console.error('Error al obtener los espacios físicos:', error);
+      }
+    );
+  }
+
 }
