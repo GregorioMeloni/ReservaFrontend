@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Reserva } from 'src/app/Modelo/Reserva';
-import { ReservaService } from 'src/app/Service/reserva.service';
+import { Reserva } from 'src/app/model/types';
+import { ReservaService } from 'src/app/service/reserva.service';
 
 @Component({
   selector: 'app-listar-reserva',
@@ -15,15 +15,14 @@ export class ListarReservaComponent {
   sortDir = 'asc';
   sortColumn = 'id';
   ordenAplicado = false;
-  reservas: Reserva[];
+  reservas: Reserva[] = [];
   paginaActual = 0;
-  elementosPorPagina = 3;
+  elementosPorPagina = 10;
   totalPaginas = 0;
   mostrarErrorValorBusqueda = false;
 
   // Inyección de dependencias
   constructor(private service: ReservaService, private router: Router) {
-    this.reservas = [];
   }
 
   // Al iniciar el componente, se obtienen las reservas
@@ -39,11 +38,10 @@ export class ListarReservaComponent {
   // Obtener reservas con paginación y ordenamiento
   getReservas() {
     this.service.getReservas(this.paginaActual, this.sortColumn, this.sortDir, this.filtroColumna, this.valorBusqueda)
-      .subscribe((data: { content: Reserva[]; totalPages: number; }) => {
+      .subscribe(data => {
         this.reservas = data.content;
         this.totalPaginas = data.totalPages;
-      }
-    );
+      });
   }
 
   // Botón Editar
@@ -52,7 +50,7 @@ export class ListarReservaComponent {
     this.router.navigate(['edit']);
   }
 
-  //Botón Eliminar
+  // Botón Eliminar
   delete(reserva: Reserva) {
     this.service.deleteReserva(reserva)
       .subscribe(data => {
@@ -62,17 +60,17 @@ export class ListarReservaComponent {
     location.reload();
   }
 
-  //Validación campo de valor de búsqueda y aplicaciónd del filtro
+  // Validación campo de valor de búsqueda y aplicaciónd del filtro
   aplicarFiltro() {
     this.getReservas();
   }
 
-  //Se seleccionó un orden
+  // Se seleccionó un orden
   aplicarOrden() {
     this.getReservas();
   }
 
-  //Botón Limpiar filtro
+  // Botón Limpiar filtro
   limpiarFiltro() {
     this.filtroColumna = '';
     this.valorBusqueda = '';
@@ -88,6 +86,7 @@ export class ListarReservaComponent {
     this.getReservas();
   }
 
+  // Obtener array de páginas para paginación
   getArrayPaginas() {
     let arrayPaginas = [];
     for (let i = 0; i < this.totalPaginas; i++) {

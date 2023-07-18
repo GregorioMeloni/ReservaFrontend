@@ -1,30 +1,30 @@
-<br><br>
-<div class="container col-md-6">
-    <div class="card">
-        <div class="card-header">
-            <h3>Agregar Estados</h3>
-        </div>
-        <div class="card-body">
-            <form action="">
-                <div class="form-group">
-                    <label for="">Nombre</label>
-                    <input [(ngModel)]="estado.nombre" name="nombre" type="text" class="form-control">
-                    <div *ngIf="nombreError" class="text-danger">Debe completar el nombre</div>
-                  </div>
-                  <div class="form-group">
-                    <label for="">Descripción</label>
-                    <input [(ngModel)]="estado.descripcion" name="descripcion" type="text" class="form-control">
-                    <div *ngIf="descripcionError" class="text-danger">Debe completar la descripción</div>
-                  </div>
-                  <div class="form-group">
-                    <label for="">Color</label>
-                    <input [(ngModel)]="estado.color" name="color" type="color" class="form-control">
-                    <div *ngIf="colorError" class="text-danger">El color debe tener máximo 6 caracteres</div>
-                  </div>
-                <br>
-                <button (click)="Guardar(estado)" class="btn btn-danger" style="margin-left: 10px;">Guardar</button>
-                <a href="/listar" class="btn btn-secondary" style="margin-left: 10px;">Volver</a>
-            </form>
-        </div>
+<div class="container col-md-6 mt-4">
+  <div class="card">
+    <div class="card-header">
+        <h3>Agregar Estados</h3>
     </div>
+    <div class="card-body">
+      <form action="">
+        <div class="form-group mt-2">
+          <label for="">Nombre</label>
+          <input [(ngModel)]="estado.nombre" name="nombre" type="text" class="form-control">
+          <div *ngIf="nombreError" class="text-danger">Debe completar el nombre</div>
+        </div>
+        <div class="form-group mt-2">
+          <label for="">Descripción</label>
+          <input [(ngModel)]="estado.descripcion" name="descripcion" type="text" class="form-control">
+          <div *ngIf="descripcionError" class="text-danger">Debe completar la descripción</div>
+        </div>
+        <div class="form-group mt-2">
+          <label for="">Color</label>
+          <input [(ngModel)]="estado.color" name="color" type="color" class="form-control">
+          <div *ngIf="colorError" class="text-danger">El color debe tener máximo 6 caracteres</div>
+        </div>
+        <div class="mt-4">
+          <button (click)="guardar(estado)" class="btn btn-primary ml-2">Guardar</button>
+          <a href="/listar" class="btn btn-secondary" style="margin-left: 10px;">Volver</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

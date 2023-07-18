@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListarComponent } from './estado/listar/listar.component';
+import { ListarComponent } from './estado/listar-estado/listar-estado.component';
 import { AddComponent } from './estado/add/add.component';
 import { EditComponent } from './estado/edit/edit.component';
 import { HomeComponent } from './home/home.component';
