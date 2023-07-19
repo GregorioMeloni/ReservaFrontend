@@ -70,7 +70,7 @@ export class AddReservaComponent {
     this.service.createReserva(reserva).subscribe(data => {
       alert('Agregado con éxito');
       this.router.navigate(['listar-reserva']);
-    }); 
+    });
   }
   //Validación Campos Forms
   validarCampos(): boolean {

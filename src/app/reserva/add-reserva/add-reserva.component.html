@@ -8,12 +8,12 @@
             <form action="">
                 <div class="form-group">
                     <label for="">Fecha-Hora Inicio </label>
-                    <input type="datetime-local" [(ngModel)]="reserva.fechaHoraInicio" class="form-control">
+                    <input type="datetime-local" [(ngModel)]="reserva.fechaHoraInicio" [ngModelOptions]="{standalone: true}" class="form-control">
                     <div *ngIf="fechaHoraInicioError" class="text-danger">Debe completar la Fecha-Hora Inicio</div>
                   </div>
                   <div class="form-group mt-3">
                     <label for="">Fecha-Hora Fin </label>
-                    <input type="datetime-local" [(ngModel)]="reserva.fechaHoraFin" class="form-control">
+                    <input type="datetime-local" [(ngModel)]="reserva.fechaHoraFin" [ngModelOptions]="{standalone: true}" class="form-control">
                     <div *ngIf="fechaHoraFinError" class="text-danger">Debe completar la Fecha-Hora Fin</div>
                   </div>
                   <div class="form-group mt-3">
@@ -24,14 +24,14 @@
                   <div class="form-group mt-3">
                     <label for="">Cliente</label>
                     <select [(ngModel)]="reserva.cliente" name="cliente" class="form-control">
-                      <option *ngFor="let cliente of clientes" [value]="cliente">{{ cliente.nombre }}</option>
+                      <option *ngFor="let cliente of clientes" [ngValue]="cliente">{{ cliente.nombre }}</option>
                     </select>
                   </div>
                   
                   <div class="form-group mt-3">
                     <label for="">Espacio Fisico</label>
                     <select [(ngModel)]="reserva.espacioFisico" name="espacioFisico" class="form-control custom-select">
-                      <option *ngFor="let espacioFisico of espaciosFisicos" [value]="espacioFisico">{{ espacioFisico.nombre }}</option>
+                      <option *ngFor="let espacioFisico of espaciosFisicos" [ngValue]="espacioFisico">{{ espacioFisico.nombre }}</option>
                     </select>
                   </div>
                 <br>
