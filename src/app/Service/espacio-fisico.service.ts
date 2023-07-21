@@ -2,21 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EspacioFisico, Page } from '../model/types';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EspacioFisicoService {
 
-  constructor(private http: HttpClient) { }
+  // URL base
+  private API_URL = environment.apiUrl + '/espacio-fisico';
 
-  // Url común a quienes lo utilicen
-  apiUrl = 'http://localhost:9500/api/v1/espacio-fisico';
+  constructor(private http: HttpClient) { }
 
   // Trae todos los estados -> GET All
   getEspaciosFisicos(page: number, sortBy: string, sortDir: string, filterColumn: string, filter: string): Observable<Page<EspacioFisico>> {
     // Default values
-    let url = this.apiUrl;
+    let url = this.API_URL;
 
     // Paginación
     url = url + '?page=' + page;

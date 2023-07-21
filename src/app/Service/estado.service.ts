@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Estado, Page } from '../model/types';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstadoService {
+  
+  // URL base
+  private API_URL = environment.apiUrl + '/estado';
 
   constructor(private http: HttpClient) { }
 

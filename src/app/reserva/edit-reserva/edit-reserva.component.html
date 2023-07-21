@@ -29,20 +29,20 @@
           </div>
           <div class="form-group mt-2">
             <label for="">Cliente</label>
-            <select type="datetime-local" [(ngModel)]="reserva.cliente" name="cliente" [ngModelOptions]="{standalone: true}" class="form-control custom-select">
-              <option *ngFor="let cliente of clientes" [ngValue]="cliente">{{ cliente.nombre }}</option>
+            <select [(ngModel)]="reserva.cliente.id" name="cliente" class="form-control custom-select">
+              <option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nombre }}</option>
             </select>
           </div>
           <div class="form-group mt-2">
             <label for="">Espacio Fisico</label>
-            <select type="datetime-local" [(ngModel)]="reserva.espacioFisico" name="espacioFisico" [ngModelOptions]="{standalone: true}" class="form-control custom-select">
-              <option *ngFor="let espacioFisico of espaciosFisicos" [ngValue]="espacioFisico">{{ espacioFisico.nombre }}</option>
+            <select [(ngModel)]="reserva.espacioFisico.id" name="espacioFisico" class="form-control custom-select">
+              <option *ngFor="let espacioFisico of espaciosFisicos" [value]="espacioFisico.id">{{ espacioFisico.nombre }}</option>
             </select>
           </div>
           <div class="form-group mt-2">
             <label for="">Estado</label>
-            <select type="datetime-local" [(ngModel)]="reserva.estado" name="estado" [ngModelOptions]="{standalone: true}" class="form-control custom-select">
-              <option *ngFor="let estado of estados" [ngValue]="estado">{{ estado.nombre }}</option>
+            <select [(ngModel)]="reserva.estado.id" name="estado" class="form-control custom-select">
+              <option *ngFor="let estado of estados" [value]="estado.id">{{ estado.nombre }}</option>
             </select>
           </div>
           
@@ -51,7 +51,7 @@
             <input [(ngModel)]="reserva.motivoRechazo" name="motivoRechazo" type="text" class="form-control">
           </div>
           <br>
-          <button (click)="actualizar(reserva)" class="btn btn-primary" style="margin-left: 10px;">Actualizar</button>
+          <button (click)="actualizar()" class="btn btn-primary" style="margin-left: 10px;">Actualizar</button>
           <a href="/listar-reserva" class="btn btn-secondary" style="margin-left: 10px;">Volver</a>
         </form>
       </div>

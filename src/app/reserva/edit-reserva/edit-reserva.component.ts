@@ -64,16 +64,18 @@ export class EditReservaComponent {
     this.getEspaciosFisicos();
     this.getEstados();
   }
+
   //Botón editar del listar
   Editar() {
     let id = Number(localStorage.getItem('id') || '');
     this.service.getReservaId(id).subscribe(data => {
       this.reserva = data;
-      console.log(this.reserva)
     });
+    
   }
+
   //Botón Actualizar del Form
-  actualizar(reserva: Reserva) {
+  actualizar() {
     if (!this.validarCampos()) {
       return;
     }
@@ -85,6 +87,7 @@ export class EditReservaComponent {
     });
 
   }
+
   getClientes() {
     this.clienteService.getClientes(0, "id", "asc", " ", " ").subscribe(
       (data) => {
@@ -95,6 +98,7 @@ export class EditReservaComponent {
       }
     );
   }
+
   getEspaciosFisicos() {
     this.espacioFisicoService.getEspaciosFisicos(0, "id", "asc", " ", " ").subscribe(
       (data) => {
@@ -105,6 +109,7 @@ export class EditReservaComponent {
       }
     );
   }
+
   getEstados() {
     this.estadoService.getEstados(0, "id", "asc", " ", " ").subscribe(
       (data) => {
@@ -115,6 +120,7 @@ export class EditReservaComponent {
       }
     );
   }
+  
   //Validación Campos Forms
   validarCampos(): boolean {
     let isValid = true;

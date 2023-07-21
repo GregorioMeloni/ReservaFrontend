@@ -121,16 +121,19 @@ export class ListarReservaComponent {
   }
 
   parseDate(date: Date): string {
-    let dateString: string = date.toString();
-    return new Date(dateString).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${day}/${month}/${year}`;
   }
 
   parseTime(horaInicio: Date, horaFin: Date): string {
     let horaInicioString: string = horaInicio.toString();
     let horaFinString: string = horaFin.toString();
-    return new Date(horaInicioString).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) + 
-      " - " + new Date(horaFinString).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    return new Date(horaInicioString).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) + 
+      " - " + new Date(horaFinString).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
   }
+  
   parseMinutes(minutes: number): string {
     let hours = Math.floor(minutes / 60);
     let minutesLeft = minutes % 60;

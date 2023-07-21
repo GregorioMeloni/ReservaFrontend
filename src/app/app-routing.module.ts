@@ -12,7 +12,7 @@ import { ListarReservaComponent } from './reserva/listar-reserva/listar-reserva.
 const routes: Routes = [
   //Rutas
   { path: '', component: HomeComponent },
-  {path: 'listar', component: ListarComponent},
+  {path: 'listar-estados', component: ListarComponent},
   {path: 'add', component: AddComponent},
   {path: 'edit', component: EditComponent},
   {path: 'listar-reserva', component: ListarReservaComponent},

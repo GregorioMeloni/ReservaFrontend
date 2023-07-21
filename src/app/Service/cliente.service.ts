@@ -1,22 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, filter } from 'rxjs';
 import { Cliente, Page } from '../model/types';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
 
-  constructor(private http: HttpClient) { }
+  // URL base
+  private API_URL = environment.apiUrl + '/cliente';
 
-  // Url común a quienes lo utilicen
-  apiUrl = 'http://localhost:9500/api/v1/cliente';
+  constructor(private http: HttpClient) { }
 
   // Trae todos los estados -> GET All
   getClientes(page: number, sortBy: string, sortDir: string, filterColumn: string, filter: string): Observable<Page<Cliente>> {
     // Default values
-    let url = this.apiUrl;
+    let url = this.API_URL;
 
     // Paginación
     url = url + '?page=' + page;
@@ -39,4 +40,5 @@ export class ClienteService {
     // Devolver
     return this.http.get<Page<Cliente>>(url);
   }
+
 }

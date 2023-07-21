@@ -2,21 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Reserva, Page } from '../model/types';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservaService {
 
-  constructor(private http: HttpClient) { }
+  // URL base
+  private API_URL = environment.apiUrl + '/reserva';
 
-  // Url común a quienes lo utilicen
-  apiUrl: string = 'http://localhost:9500/api/v1/reserva';
+  constructor(private http: HttpClient) { }
 
   // Trae todas las reservas -> GET All
   getReservas(page: number, sortBy: string, sortDir: string, filterColumn: string, filter: string): Observable<Page<Reserva>> {
     // Default values
-    let url = this.apiUrl;
+    let url = this.API_URL;
 
     // Paginación
     url = url + '?page=' + page;
@@ -39,7 +40,7 @@ export class ReservaService {
 
   // Trae una reserva por id -> GET by Id
   getReservaId(id: number) {
-    return this.http.get<Reserva>(this.apiUrl + "/" + id);
+    return this.http.get<Reserva>(this.API_URL + "/" + id);
   }
 
   // Crea una reserva -> POST Create
@@ -54,18 +55,18 @@ export class ReservaService {
       motivoRechazo: reserva.motivoRechazo
     };
   
-    return this.http.post<Reserva>(this.apiUrl, nuevaReserva);
+    return this.http.post<Reserva>(this.API_URL, nuevaReserva);
   }
   
 
   // Actualiza una reserva -> PUT Update
   updateReserva(reserva: Reserva) {
-    return this.http.put<Reserva>(this.apiUrl + "/" + reserva.id, reserva);
+    return this.http.put<Reserva>(this.API_URL + "/" + reserva.id, reserva);
   }
 
   // Elimina una reserva -> DELETE Delete
   deleteReserva(reserva: Reserva) {
-    return this.http.delete<Reserva>(this.apiUrl + "/" + reserva.id);
+    return this.http.delete<Reserva>(this.API_URL + "/" + reserva.id);
   }
 
 }
