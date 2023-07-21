@@ -71,8 +71,8 @@ export class ReservaService {
 }
 
 export interface NuevaReserva {
-  fechaHoraInicio: Date;
-  fechaHoraFin: Date;
+  fechaHoraInicio: string;
+  fechaHoraFin: string;
   espacioFisico: {id: number};
   cliente: {id: number};
   motivoReserva: string;

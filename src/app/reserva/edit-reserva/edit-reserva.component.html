@@ -1,1 +1,59 @@
-<p>edit-reserva works!</p>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  </head>
+<div class="container col-md-6 mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h3>Modificar Reserva</h3>
+      </div>
+      <div class="card-body">
+        <form action="">
+          <div class="form-group mt-2">
+            <label for="">Id</label>
+            <input [(ngModel)]="reserva.id" name="id" type="text" class="form-control" disabled>
+          </div>
+          <div class="form-group mt-2">
+            <label for="">Motivo Reserva</label>
+            <input [(ngModel)]="reserva.motivoReserva" name="motivoReserva" type="text" class="form-control">
+            <div *ngIf="motivoReservaError" class="text-danger">Debe completar el motivo de Reserva</div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="">Fecha-Hora Inicio </label>
+            <input [(ngModel)]="reserva.fechaHoraInicio" name="fechaHoraInicio" type="datetime-local" [ngModelOptions]="{standalone: true}" class="form-control">
+            <div *ngIf="fechaHoraInicioError" class="text-danger">Debe completar la Fecha-Hora Inicio</div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="">Fecha-Hora Fin </label>
+            <input type="datetime-local" [(ngModel)]="reserva.fechaHoraFin" name="fechaHoraInicio" [ngModelOptions]="{standalone: true}" class="form-control">
+            <div *ngIf="fechaHoraFinError" class="text-danger">Debe completar la Fecha-Hora Fin</div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="">Cliente</label>
+            <select type="datetime-local" [(ngModel)]="reserva.cliente" name="cliente" [ngModelOptions]="{standalone: true}" class="form-control custom-select">
+              <option *ngFor="let cliente of clientes" [ngValue]="cliente">{{ cliente.nombre }}</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
+            <label for="">Espacio Fisico</label>
+            <select type="datetime-local" [(ngModel)]="reserva.espacioFisico" name="espacioFisico" [ngModelOptions]="{standalone: true}" class="form-control custom-select">
+              <option *ngFor="let espacioFisico of espaciosFisicos" [ngValue]="espacioFisico">{{ espacioFisico.nombre }}</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
+            <label for="">Estado</label>
+            <select type="datetime-local" [(ngModel)]="reserva.estado" name="estado" [ngModelOptions]="{standalone: true}" class="form-control custom-select">
+              <option *ngFor="let estado of estados" [ngValue]="estado">{{ estado.nombre }}</option>
+            </select>
+          </div>
+          
+          <div class="form-group mt-2">
+            <label for="">Motivo Rechazo</label>
+            <input [(ngModel)]="reserva.motivoRechazo" name="motivoRechazo" type="text" class="form-control">
+          </div>
+          <br>
+          <button (click)="actualizar(reserva)" class="btn btn-primary" style="margin-left: 10px;">Actualizar</button>
+          <a href="/listar-reserva" class="btn btn-secondary" style="margin-left: 10px;">Volver</a>
+        </form>
+      </div>
+    </div>
+  </div>

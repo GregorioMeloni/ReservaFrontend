@@ -13,8 +13,8 @@ import { ReservaService } from 'src/app/service/reserva.service';
 export class AddReservaComponent {
   reserva: Reserva = {
     id: 1,
-    fechaHoraInicio: new Date(),
-    fechaHoraFin: new Date(),
+    fechaHoraInicio: '',
+    fechaHoraFin: '',
     comentario: '',
     fechaHoraCreacion: '',
     cliente: {
@@ -56,8 +56,28 @@ export class AddReservaComponent {
   clientes: Cliente[] = [];
   espaciosFisicos: EspacioFisico[] = [];
 
-  constructor(private router: Router, private service: ReservaService, private clienteService: ClienteService, private espacioFisicoService: EspacioFisicoService) {}
+  constructor(private router: Router, private service: ReservaService, private clienteService: ClienteService, private espacioFisicoService: EspacioFisicoService) {
 
+    this.reserva.fechaHoraInicio = this.obtenerFechaString();
+    this.reserva.fechaHoraFin = this.obtenerFechaString();
+
+  }
+
+  obtenerFechaString(): string {
+    let date = new Date();
+    const year = date.getFullYear();
+    const month = this.padZero(date.getMonth() + 1);
+    const day = this.padZero(date.getDate());
+    const hours = this.padZero(date.getHours());
+    const minutes = this.padZero(date.getMinutes());
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  // Función auxiliar para agregar un cero delante de números menores a 10
+  padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
   ngOnInit() {
     this.getClientes();
     this.getEspaciosFisicos();
@@ -67,10 +87,25 @@ export class AddReservaComponent {
     if (!this.validarCampos()) {
       return;
     }
-    this.service.createReserva(reserva).subscribe(data => {
+    this.service.createReserva(reserva).subscribe((data) => {
       alert('Agregado con éxito');
       this.router.navigate(['listar-reserva']);
+    },
+    (error) => {
+      console.error('Error al obtener los clientes:', error);
+      alert(error.error.message);
     });
+    
+    
+    
+    // (data => {
+    //   alert('Agregado con éxito');
+    //   this.router.navigate(['listar-reserva']);
+    // });
+
+
+
+
   }
   //Validación Campos Forms
   validarCampos(): boolean {
@@ -105,17 +140,20 @@ export class AddReservaComponent {
     this.clienteService.getClientes(0, "id", "asc", " ", " ").subscribe(
       (data) => {
         this.clientes = data.content;
+        this.reserva.cliente = this.clientes[0];
       },
       (error) => {
         console.error('Error al obtener los clientes:', error);
       }
     );
+
   }
   
   getEspaciosFisicos() {
     this.espacioFisicoService.getEspaciosFisicos(0, "id", "asc", " ", " ").subscribe(
       (data) => {
         this.espaciosFisicos = data.content;
+        this.reserva.espacioFisico = this.espaciosFisicos[0];
       },
       (error) => {
         console.error('Error al obtener los espacios físicos:', error);

@@ -49,8 +49,8 @@ export interface Cliente {
 
 export interface Reserva {
   id: number;
-  fechaHoraInicio: Date;
-  fechaHoraFin: Date;
+  fechaHoraInicio: string;
+  fechaHoraFin: string;
   comentario: string;
   fechaHoraCreacion: string;
   cliente: Cliente;

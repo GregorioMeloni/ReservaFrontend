@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common'; // Import CommonModule
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListarComponent } from './estado/listar-estado/listar-estado.component';
@@ -31,7 +31,8 @@ import { ListarReservaComponent } from './reserva/listar-reserva/listar-reserva.
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [EstadoService],
   bootstrap: [AppComponent]

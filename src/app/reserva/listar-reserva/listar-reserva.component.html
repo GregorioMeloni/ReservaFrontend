@@ -112,9 +112,9 @@
               <td scope="row">{{reserva.id}}</td>
               <td scope="row">[{{reserva.espacioFisico.id}}] {{reserva.espacioFisico.nombre}}</td>
               <td scope="row">[{{reserva.cliente.id}}] {{reserva.cliente.nombre}}</td>
-              <td scope="row">{{parseDate(reserva.fechaHoraInicio)}}</td>
-              <td scope="row">{{parseDate(reserva.fechaHoraFin)}}</td>
-              <td scope="row">{{parseTime(reserva.fechaHoraInicio, reserva.fechaHoraFin)}}</td>
+              <td scope="row">{{formatDate(reserva.fechaHoraInicio)}}</td>
+              <td scope="row">{{formatDate(reserva.fechaHoraFin)}}</td>
+              <td scope="row">{{formatTime(reserva.fechaHoraInicio) +" - "+ formatTime(reserva.fechaHoraFin)}}</td>
               <td scope="row">{{parseMinutes(reserva.duracion)}}</td>
               <td scope="row">[{{reserva.estado.id}}] {{reserva.estado.nombre}}</td>
               <td scope="row">{{reserva.motivoReserva}}</td>

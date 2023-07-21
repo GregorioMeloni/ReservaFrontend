@@ -23,6 +23,7 @@ export class ListarReservaComponent {
 
   // Inyección de dependencias
   constructor(private service: ReservaService, private router: Router) {
+    
   }
 
   // Al iniciar el componente, se obtienen las reservas
@@ -33,6 +34,24 @@ export class ListarReservaComponent {
   // Botón Nuevo redirije a componente add
   nuevo() {
     this.router.navigate(["add-reserva"]);
+  }
+
+  formatDate(dateTime: string):string {
+    const date = new Date(dateTime);
+    return `${date.getFullYear()}/${this.padNumber(date.getMonth() + 1)}/${this.padNumber(date.getDate())}`;
+  }
+
+  formatTime(dateTime: string):string {
+
+    const dateTimeParts = dateTime.split('T');
+
+    const timePart = dateTimeParts[1];
+
+    return timePart.slice(0, 5);
+  }
+
+  private padNumber(value: number): string {
+    return value < 10 ? `0${value}` : value.toString();
   }
 
   // Obtener reservas con paginación y ordenamiento
@@ -47,7 +66,7 @@ export class ListarReservaComponent {
   // Botón Editar
   editar(reserva: Reserva): void {
     localStorage.setItem('id', reserva.id.toString());
-    this.router.navigate(['edit']);
+    this.router.navigate(['edit-reserva']);
   }
 
   // Botón Eliminar
