@@ -37,17 +37,15 @@ export class ListarComponent implements OnInit {
       });
   }
 
-  editar(estado: Estado): void {
+  editarEstado(estado: Estado): void {
     localStorage.setItem('id', estado.id.toString());
     this.router.navigate(['edit']);
   }
 
-  delete(estado: Estado) {
-    this.estadoService.deleteEstado(estado).subscribe(() => {
-      this.estados = this.estados.filter(e => e !== estado);
-      alert('Estado eliminado');
-      location.reload();
-    });
+  deleteEstado(estado: Estado) {
+    this.estadoService.deleteEstado(estado);
+    alert('Se ha eliminado el estado con id: ' + estado.id);
+    this.getEstados();
   }
 
   aplicarFiltro() {

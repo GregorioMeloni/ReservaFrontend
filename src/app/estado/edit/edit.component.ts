@@ -40,7 +40,7 @@ export class EditComponent {
     this.service.updateEstado(this.estado).subscribe(data => {
       this.estado = data;
       alert('Se ha actualizado');
-      this.router.navigate(['listar']);
+      this.router.navigate(['listar-estados']);
     });
 
   }

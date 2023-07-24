@@ -14,13 +14,10 @@ export class EstadoService {
 
   constructor(private http: HttpClient) { }
 
-  // Url común a quienes lo utilicen
-  apiUrl = 'http://localhost:9500/api/v1/estado';
-
   // Trae todos los estados -> GET All
   getEstados(page: number, sortBy: string, sortDir: string, filterColumn: string, filter: string): Observable<Page<Estado>> {
     // Default values
-    let url = this.apiUrl;
+    let url = this.API_URL;
 
     // Paginación
     url = url + '?page=' + page;
@@ -46,22 +43,22 @@ export class EstadoService {
 
   // Trae un estado por id -> GET by Id
   getEstadoId(id: number) {
-    return this.http.get<Estado>(this.apiUrl + "/" + id);
+    return this.http.get<Estado>(this.API_URL + "/" + id);
   }
 
   // Crea un estado -> POST Create
   createEstado(estado: Estado) {
-    return this.http.post<Estado>(this.apiUrl, estado);
+    return this.http.post<Estado>(this.API_URL, estado);
   }
 
   // Actualiza un estado -> PUT Update
   updateEstado(estado: Estado) {
-    return this.http.put<Estado>(this.apiUrl + "/" + estado.id, estado);
+    return this.http.put<Estado>(this.API_URL + "/" + estado.id, estado);
   }
 
   // Elimina un estado -> DELETE Delete
   deleteEstado(estado: Estado) {
-    return this.http.delete<Estado>(this.apiUrl + "/" + estado.id);
+    return this.http.delete<Estado>(this.API_URL + "/" + estado.id).subscribe();
   }  
 
 }

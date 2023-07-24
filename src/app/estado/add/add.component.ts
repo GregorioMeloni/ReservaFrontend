@@ -30,7 +30,7 @@ export class AddComponent {
     }
     this.service.createEstado(estado).subscribe(data => {
       alert('Agregado con éxito');
-      this.router.navigate(['listar']);
+      this.router.navigate(['listar-estados']);
     });
   }
 
