@@ -10,11 +10,9 @@ import { ReservaService } from 'src/app/service/reserva.service';
 })
 export class ListarReservaComponent {
   filtroColumna = '';
-  filtroAplicado = false;
   valorBusqueda = '';
   sortDir = 'asc';
   sortColumn = 'id';
-  ordenAplicado = false;
   reservas: Reserva[] = [];
   paginaActual = 0;
   elementosPorPagina = 10;
@@ -93,7 +91,6 @@ export class ListarReservaComponent {
   limpiarFiltro() {
     this.filtroColumna = '';
     this.valorBusqueda = '';
-    this.filtroAplicado = false;
     this.mostrarErrorValorBusqueda = false;
     this.getReservas();
   }
@@ -101,7 +98,6 @@ export class ListarReservaComponent {
   // Botón Limpiar Orden
   limpiarOrden() {
     this.sortColumn = '';
-    this.ordenAplicado = false;
     this.getReservas();
   }
 
