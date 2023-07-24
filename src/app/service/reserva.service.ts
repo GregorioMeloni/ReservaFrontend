@@ -22,6 +22,9 @@ export class ReservaService {
     // Paginación
     url = url + '?page=' + page;
 
+    // Size
+    url = url + '&size=10';
+
     // Si no hay sorting
     if (sortBy == null || sortBy == undefined || sortDir == null || sortDir == undefined) {
       url = url + '&sort=id,asc';
