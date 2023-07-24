@@ -33,7 +33,7 @@ export class EstadoService {
     }
 
     // Tamaño de página
-    //url = url + '&size=5';
+    url = url + '&size=10';
 
     // Añadir filtros
     if (filterColumn != '' && filter != '') {
