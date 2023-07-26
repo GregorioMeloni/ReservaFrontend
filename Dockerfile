@@ -17,6 +17,9 @@ FROM nginx:latest
 # Eliminar los archivos existentes en la carpeta html
 RUN rm -rf /usr/share/nginx/html/*
 
+# Copiar la configuración de Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copiar los archivos estáticos de la etapa de compilación al directorio de Nginx
 COPY --from=build /app/dist/desarrollo-web-reserva usr/share/nginx/html
 
